@@ -10,6 +10,8 @@ See here: https://hub.docker.com/r/mrecco/lbgap
 
 **CUSTOM_RESPONCE** - you can set other than "OK" body return
 
+**CUSTOM_LISTEN_PORT** - you can set other than ":80" listen port
+
 ## Tips
 
 Give me 0.1 BTC if you want me to never write code.

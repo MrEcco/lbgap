@@ -9,6 +9,9 @@ import (
 )
 
 func main() {
+	// Custom listen port
+	listenPort := getEnv("CUSTOM_LISTEN_PORT", ":80")
+
 	// Custom return body
 	returnBody := getEnv("CUSTOM_RESPONCE", "OK")
 
@@ -27,7 +30,13 @@ func main() {
 		fmt.Fprintf(w, returnBody)
 	})
 
-	http.ListenAndServe(":80", nil)
+	if errCustomPort := http.ListenAndServe(listenPort, nil); errCustomPort != nil {
+		// Bad port. Lets try to listen just ":80"
+		log.Printf("Cannot listen \"%s\" port. Fallback to \":80\"", listenPort)
+		if err := http.ListenAndServe(":80", nil); err != nil {
+			log.Printf("Cannot listen fallback port: %s", err.Error())
+		}
+	}
 }
 
 // Get env with fallback
